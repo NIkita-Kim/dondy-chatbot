@@ -24,6 +24,8 @@ const buildUrl = (opts: BuildDbURLOptions) => {
 export const DatabaseModule = MongooseModule.forRootAsync({
   inject: [ConfigService],
   useFactory: (config: ConfigService) => {
+    const mongoUrl = config.get('MONGODB_URL');
+
     const connection = {
       user: config.getOrThrow('MONGODB_USER') || undefined,
       pass: config.getOrThrow('MONGODB_PASSWORD') || undefined,
@@ -35,7 +37,7 @@ export const DatabaseModule = MongooseModule.forRootAsync({
     };
 
     return {
-      uri: buildUrl(connection),
+      uri: mongoUrl || buildUrl(connection),
     };
   },
 });
