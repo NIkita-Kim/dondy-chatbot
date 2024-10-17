@@ -38,6 +38,7 @@ export const DatabaseModule = MongooseModule.forRootAsync({
 
     return {
       uri: mongoUrl || buildUrl(connection),
+      dbName: connection.dbName,
     };
   },
 });
