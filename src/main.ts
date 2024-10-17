@@ -10,6 +10,7 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
+  app.setGlobalPrefix('api');
   if (configService.get('APP_ENV') !== 'production') {
     const config = new DocumentBuilder()
       .setTitle('ChatBot API')
@@ -18,7 +19,7 @@ async function bootstrap() {
       .addBearerAuth()
       .build();
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
+    SwaggerModule.setup('swagger', app, document);
   }
 
   app.enableCors({

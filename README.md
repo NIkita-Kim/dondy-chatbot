@@ -11,4 +11,4 @@ $ npm run start:dev
 ```
 
 ### Swagger
-Swagger is available on your [localhost:${APP_PORT}/api](http://localhost:3050/api)
+Swagger is available on your [localhost:${APP_PORT}/swagger](http://localhost:3050/swagger)
