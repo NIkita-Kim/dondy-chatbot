@@ -24,21 +24,26 @@ const buildUrl = (opts: BuildDbURLOptions) => {
 export const DatabaseModule = MongooseModule.forRootAsync({
   inject: [ConfigService],
   useFactory: (config: ConfigService) => {
-    const mongoUrl = config.get('MONGODB_URL');
+    let mongoUrl = config.get('MONGODB_URL');
+    const dbName = config.getOrThrow('MONGODB_DATABASE');
 
-    const connection = {
-      user: config.getOrThrow('MONGODB_USER') || undefined,
-      pass: config.getOrThrow('MONGODB_PASSWORD') || undefined,
-      dbName: config.getOrThrow('MONGODB_DATABASE'),
-      port: config.getOrThrow('MONGODB_PORT'),
-      host: config.getOrThrow('MONGODB_HOST'),
-      authSource: config.getOrThrow('MONGODB_AUTH_SOURCE'),
-      protocol: config.getOrThrow('MONGODB_PROTOCOL'),
-    };
+    if (!mongoUrl) {
+      const connection = {
+        user: config.getOrThrow('MONGODB_USER') || undefined,
+        pass: config.getOrThrow('MONGODB_PASSWORD') || undefined,
+        dbName: dbName,
+        port: config.getOrThrow('MONGODB_PORT'),
+        host: config.getOrThrow('MONGODB_HOST'),
+        authSource: config.getOrThrow('MONGODB_AUTH_SOURCE'),
+        protocol: config.getOrThrow('MONGODB_PROTOCOL'),
+      };
+
+      mongoUrl = buildUrl(connection);
+    }
 
     return {
-      uri: mongoUrl || buildUrl(connection),
-      dbName: connection.dbName,
+      uri: mongoUrl,
+      dbName,
     };
   },
 });
