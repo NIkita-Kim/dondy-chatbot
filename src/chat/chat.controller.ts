@@ -18,7 +18,6 @@ import { UpdateConversationDto } from './dto/update-conversation.dto';
 import { BelongsToChatGuard } from '../shared/guards/belongs-to-chat.guard';
 
 @ApiTags('Chat')
-@UseGuards(BelongsToChatGuard)
 @Controller('chats')
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
@@ -44,6 +43,7 @@ export class ChatController {
   }
 
   @Get(':id')
+  @UseGuards(BelongsToChatGuard)
   @Public()
   async loadConversation(
     @Cookie(USER_ID_COOKIE_NAME) customerId: string,
@@ -53,6 +53,7 @@ export class ChatController {
   }
 
   @Patch(':id')
+  @UseGuards(BelongsToChatGuard)
   @Public()
   async updateConversation(
     @Param('id') id: string,

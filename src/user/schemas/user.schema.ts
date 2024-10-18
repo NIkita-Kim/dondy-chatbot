@@ -3,6 +3,7 @@ import { HydratedDocument } from 'mongoose';
 import { hashSync } from 'bcryptjs';
 import { Types } from 'mongoose';
 import { Company } from '../../company/schemas/company.schema';
+import * as mongoose from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -22,8 +23,13 @@ export class User {
   })
   password: string;
 
-  @Prop({ type: Types.ObjectId, ref: Company.name, required: true })
-  companyId: Types.ObjectId;
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Company.name,
+    required: true,
+    set: (value: string) => new mongoose.Types.ObjectId(value),
+  })
+  company: Types.ObjectId;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

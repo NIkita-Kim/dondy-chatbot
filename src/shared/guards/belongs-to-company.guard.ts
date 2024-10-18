@@ -11,6 +11,6 @@ export class BelongsToCompanyGuard implements CanActivate {
     const companyId = request.params['companyId'];
     const user = await this.userService.findOne({ _id: userId });
 
-    return user && user.companyId.equals(companyId);
+    return user && user.company.equals(companyId);
   }
 }

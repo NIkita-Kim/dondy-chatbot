@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ChatService } from '../../chat/chat.service';
+import { USER_ID_COOKIE_NAME } from '../cookie/cookie.const';
 
 @Injectable()
 export class BelongsToChatGuard implements CanActivate {
@@ -10,7 +11,7 @@ export class BelongsToChatGuard implements CanActivate {
     const chatId = request.params['id'];
     const chat = await this.chatService.loadConversation(
       chatId,
-      request.user['id'],
+      request.cookies[USER_ID_COOKIE_NAME],
     );
 
     return !!chat;

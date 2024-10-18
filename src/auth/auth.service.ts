@@ -49,7 +49,7 @@ export class AuthService {
     const comp = await this.companyService.create(company);
     const usr = await this.userService.create({
       ...user,
-      companyId: comp._id,
+      company: comp._id,
     });
 
     return await this.login(usr);

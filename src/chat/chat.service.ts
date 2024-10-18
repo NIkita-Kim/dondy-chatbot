@@ -21,9 +21,15 @@ export class ChatService {
   }
 
   async findForUser(customerId: string): Promise<ChatDocument[]> {
-    return await this.chatModel.find({
-      customerId,
-    });
+    return await this.chatModel
+      .find({
+        customerId,
+      })
+      .populate({
+        path: 'survey',
+        select: ['name', 'description'],
+      })
+      .exec();
   }
 
   async startConversation(dto: CreateChatDto): Promise<ChatDocument> {

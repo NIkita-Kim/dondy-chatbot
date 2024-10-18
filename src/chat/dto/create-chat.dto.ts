@@ -10,10 +10,10 @@ export class CreateChatDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  companyId: string;
+  company: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  surveyId: string;
+  survey: string;
 }

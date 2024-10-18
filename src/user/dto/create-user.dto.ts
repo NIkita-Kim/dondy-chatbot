@@ -36,5 +36,5 @@ export class CreateUserDto {
   @ApiProperty({ type: Types.ObjectId })
   @IsString()
   @IsNotEmpty()
-  companyId: Types.ObjectId;
+  company: Types.ObjectId;
 }
