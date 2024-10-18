@@ -42,10 +42,13 @@ export class ChatService {
     chatId: string,
     customerId: string,
   ): Promise<ChatDocument> {
-    return await this.chatModel.findOne({
-      _id: chatId,
-      customerId,
-    });
+    return await this.chatModel
+      .findOne({
+        _id: chatId,
+        customerId,
+      })
+      .populate('survey')
+      .exec();
   }
 
   async updateConversation(
